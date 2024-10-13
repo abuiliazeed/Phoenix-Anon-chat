@@ -8,7 +8,9 @@
     <%= for message <- @messages do %>
       <div id={"message-#{message.id}"} class="mb-3">
         <p class="text-gray-700">
-          <span class="text-sm text-gray-500"><%= format_timestamp(message.inserted_at) %>:</span>
+          <span class="text-sm text-gray-500">
+            [<%= format_timestamp(message.inserted_at) %>] <strong><%= message.username %></strong>:
+          </span>
           <span><%= message.content %></span>
         </p>
       </div>

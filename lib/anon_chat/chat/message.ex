@@ -4,6 +4,7 @@ defmodule AnonChat.Chat.Message do
 
   schema "messages" do
     field :content, :string
+    field :username, :string
 
     timestamps(type: :utc_datetime)
   end
@@ -11,7 +12,7 @@ defmodule AnonChat.Chat.Message do
   @doc false
   def changeset(message, attrs) do
     message
-    |> cast(attrs, [:content])
-    |> validate_required([:content])
+    |> cast(attrs, [:content, :username])
+    |> validate_required([:content, :username])
   end
 end
