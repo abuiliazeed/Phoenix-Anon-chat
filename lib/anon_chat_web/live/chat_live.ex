@@ -32,6 +32,7 @@ defmodule AnonChatWeb.ChatLive do
 
       case Chat.create_message(attrs) do
         {:ok, _message} ->
+          # Reset the @message assign to an empty string
           {:noreply, assign(socket, message: "")}
 
         {:error, _changeset} ->

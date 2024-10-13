@@ -6,13 +6,18 @@
     class="h-96 overflow-y-auto mb-4 border border-gray-300 p-4 rounded"
   >
     <%= for message <- @messages do %>
-      <div id={"message-#{message.id}"} class="mb-3">
-        <p class="text-gray-700">
-          <span class="text-sm text-gray-500">
-            [<%= format_timestamp(message.inserted_at) %>] <strong><%= message.username %></strong>:
-          </span>
-          <span><%= message.content %></span>
-        </p>
+      <% is_current_user = message.username == @username %>
+      <div
+        id={"message-#{message.id}"}
+        class={"mb-3 flex " <> (if is_current_user, do: "justify-end", else: "justify-start")}
+      >
+        <div class={"max-w-xs rounded px-4 py-2 " <> (if is_current_user, do: "bg-blue-500 text-white", else: "bg-gray-200 text-gray-800")}>
+          <p class="text-sm">
+            <span class="font-semibold"><%= message.username %></span>
+            <span class="text-xs text-gray-600 ml-2"><%= format_timestamp(message.inserted_at) %></span>
+          </p>
+          <p><%= message.content %></p>
+        </div>
       </div>
     <% end %>
   </div>
@@ -24,6 +29,7 @@
       value={@message}
       placeholder="Type your message..."
       autocomplete="off"
+      phx-debounce="blur"
       class="flex-grow border border-gray-300 rounded-l px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
     />
     <button

@@ -22,10 +22,10 @@ import { Socket } from "phoenix"
 import { LiveSocket } from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 
-// **Added Hooks object**
+// **Hooks object**
 let Hooks = {}
 
-// **Defined AutoScroll Hook**
+// **AutoScroll Hook**
 Hooks.AutoScroll = {
   mounted() {
     this.handleEvent("new_message", () => {
@@ -34,6 +34,18 @@ Hooks.AutoScroll = {
   },
   updated() {
     this.el.scrollTop = this.el.scrollHeight
+  }
+}
+
+// **ClearInputOnSubmit Hook**
+Hooks.ClearInputOnSubmit = {
+  mounted() {
+    this.el.addEventListener("submit", (e) => {
+      let input = this.el.querySelector('input[name="message"]')
+      if (input) {
+        input.value = ""
+      }
+    })
   }
 }
 
